@@ -2,8 +2,8 @@ public class AquacultureZone extends GeographicalZone {
     private Aquaculture tank;
     private FeedingPgm program;
 
-    public AquacultureZone(String code, String name, ZoneStatus status, Aquaculture basin, FeedingPgm program) {
-        super(code, name, status);
+    public AquacultureZone(String code, String name, ZoneStatus status, double surface, Aquaculture basin, FeedingPgm program) {
+        super(code, name, status, surface);
 
         this.tank = tank;
         this.program = program;

@@ -7,15 +7,21 @@ public abstract class GeographicalZone {
     protected ZoneStatus status;
     protected List<Sensor> sensors;
     protected List<ProductionRecord> productionHistory;
+    protected double alertThreshold;
 
-    public GeographicalZone(String code, String name, ZoneStatus status){
+    public GeographicalZone(String code, String name, ZoneStatus status, double alertThreshold){
         this.code = code;
         this.name = name;
         this.status = status;
         this.sensors = new ArrayList<>();
         this.productionHistory = new ArrayList<>();
+        this.alertThreshold = alertThreshold;
     }
     public GeographicalZone(){};
+
+    public void setName(String name) { this.name = name; }
+    public void addReading(int sensorCode, Reading r) { /* store in a map/list */ }
+    public double getAlertThreshold() { return alertThreshold; } // add field if missing
 
     public void addProductionRecord(ProductionRecord record){
         this.productionHistory.add(record);

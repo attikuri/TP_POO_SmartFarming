@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AlertSystem {
@@ -35,6 +36,9 @@ public class AlertSystem {
         }
     }
 
+
+    public List<Alert> getActiveAlerts() { return Collections.unmodifiableList(activeAlerts); }
+    public Alert getLatestAlert() { return activeAlerts.get(activeAlerts.size() - 1); }
 
     @Override
     public String toString() {

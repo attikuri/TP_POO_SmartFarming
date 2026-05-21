@@ -22,6 +22,8 @@ public class Alert {
     public String getId() { return id; }
     public AlertLevel getLevel() { return level; }
     public boolean getIsAcknowledged() { return isAcknowledged; }
+    public int getSensorCode() { return sensorCode; }
+    public double getReadingValue() { return readingValue; }
 
     public void acknowledge() {
         this.isAcknowledged = true; // ie alert was handled

@@ -28,12 +28,19 @@ public class Crop {
 
     }
 
+    public GrowthStatus getGrowthStage() {
+        return growthStage;
+    }
+
+    public void setGrowthStage(GrowthStatus newStage) {
+        this.growthStage = newStage;
+        System.out.println("Crop " + this.id + " advanced to stage: " + newStage);
+    }
+
     public String getId(){
         return id;
     }
-    public GrowthStatus getGrowthStage(){
-        return growthStage;
-    }
+
     public double[] getPhRange(){
         return new double[]{minPhRange, maxPhRange};
     }

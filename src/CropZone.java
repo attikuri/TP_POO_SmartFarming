@@ -4,8 +4,9 @@ import java.util.List;
 public class CropZone extends GeographicalZone {
     private List<Crop> crops;
 
-    public CropZone(String code, String name, ZoneStatus status) {
-        super(code, name, status);
+
+    public CropZone(String code, String name, ZoneStatus status, double surface) {
+        super(code, name, status,surface);
         this.crops = new ArrayList<>();
     }
 

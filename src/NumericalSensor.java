@@ -13,6 +13,7 @@ public abstract class NumericalSensor extends Sensor {
     private double maxThreshold;
     private char period;           // 'h' for hourly
     private HashMap<Date, Reading[]> history;  // key: date, value: 24h record
+    private AlertSystem alertSystem;
 
     // Methods
     public NumericalSensor(int  code, int  zoneCode, Unit unit,
@@ -29,14 +30,31 @@ public abstract class NumericalSensor extends Sensor {
         this.record = new Reading[24];
         this.period = 'h';
         this.history = new HashMap<>();
+        this.alertSystem = null;
     }
-    // add reading each hour
+
+    // 2. ADD THIS SETTER: This allows the Farm to "plug in" the alert system
+    public void setAlertSystem(AlertSystem alertSystem) {
+        this.alertSystem = alertSystem;
+    }
+
+    // 3. UPDATE THIS METHOD
     public void addReading(int hour, double value) {
         if (hour < 0 || hour > 23) return;
+
         boolean outOfRange = isOutOfRange(value);
         record[hour] = new Reading(value, outOfRange);
+
+        if (outOfRange) {
+ /*           if (this.alertSystem != null) {
+                // Now it works perfectly!
+                this.alertSystem.triggerAlert(super.code, value, AlertLevel.CRITICAL);
+            } else {
+                System.out.println("⚠ WARNING: Sensor " + super.code + " detected an anomaly, but no AlertSystem is connected!");
+            }*/
+        }
     }
-    // check if the recorded value at determined hour
+
     public boolean isOutOfRange(double value) {
         return value < minThreshold || value > maxThreshold;
     }

@@ -1,3 +1,7 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class LiveStock {
     protected String id;
     protected String species;
@@ -8,6 +12,7 @@ public abstract class LiveStock {
     protected double longitude;
     private NumericalSensor biometricSensor;
     private GPSCollar gpsCollar;
+    protected List<String> healthHistory;
 
     public LiveStock(String id, String species, int age, double weight, HealthStatus healthState) {
         if (age < 0) throw new IllegalArgumentException("Age cannot be negative");
@@ -20,9 +25,9 @@ public abstract class LiveStock {
         this.healthState = healthState;
         this.latitude = 0.0;   // updated by GPS sensor later?
         this.longitude = 0.0;
+        this.healthHistory = new ArrayList<>();
+        this.healthHistory.add(LocalDate.now() + " - Initial state: Weight=" + weight + "kg, Health=" + healthState);
     }
-
-
 
     public String getId(){
         return id;
@@ -30,13 +35,21 @@ public abstract class LiveStock {
     public HealthStatus getHealthState(){
         return healthState;
     }
-    public void setHealthState(HealthStatus healthState){
-        this.healthState = healthState;
+    public void setHealthState(HealthStatus newHealthState) {
+        if (this.healthState != newHealthState) {
+            this.healthHistory.add(LocalDate.now() + " - Health changed from " + this.healthState + " to " + newHealthState);
+            this.healthState = newHealthState;
+        }
     }
-    public void updateWeight(double weight) throws IllegalArgumentException {
-        if (weight <= 0)
-            throw new IllegalArgumentException("Weight must be positive");
-        this.weight = weight;
+
+    public void updateWeight(double newWeight) throws IllegalArgumentException {
+        if (newWeight <= 0) throw new IllegalArgumentException("Weight must be positive");
+        this.healthHistory.add(LocalDate.now() + " - Weight updated from " + this.weight + "kg to " + newWeight + "kg");
+        this.weight = newWeight;
+    }
+
+    public List<String> getHealthHistory() {
+        return healthHistory;
     }
     public void updateGPSPosition(double latitude, double longitude){
         this.latitude = latitude;
@@ -48,7 +61,5 @@ public abstract class LiveStock {
                 this.longitude >= minLon && this.longitude <= maxLon);
     }
 
-/*    public void equipGPSSensor(GPSSensor gps){
-        this.gpsCollar = gps;
-    }*/
 }
+

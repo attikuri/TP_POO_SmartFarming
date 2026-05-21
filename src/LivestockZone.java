@@ -5,8 +5,8 @@ public class LivestockZone<T extends LiveStock> extends GeographicalZone {
     private List<T> animals;
     private FeedingPgm feedingProgram;
 
-    public LivestockZone(String code, String name, ZoneStatus status, FeedingPgm feedingProgram) {
-        super(code, name, status);
+    public LivestockZone(String code, String name, ZoneStatus status, double surface, FeedingPgm feedingProgram) {
+        super(code, name, status, surface);
         this.animals = new ArrayList<>();
         this.feedingProgram = feedingProgram;
     }
